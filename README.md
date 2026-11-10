@@ -1,5 +1,7 @@
 # Public documentation renderer test
 
+Demo builds omit the cookie banner, toast and consent script, matching the disabled analytics configuration. They are included only when both `PUBLIC_DEPLOYMENT_ENVIRONMENT=production` and `PUBLIC_GA_MEASUREMENT_ID` are set. The inherited shared-domain consent code still needs a public-suffix-aware domain configuration before it can be enabled on Amplify or other third-party domains. This demonstration does not enable analytics.
+
 This is a disposable public test of a portable Astro/Starlight renderer. Atlas, Beacon and Compass are fictional projects. Real project documentation and deployment credentials are not included. The GitLab deployment control plane remains private.
 
 Docker is the only local prerequisite. After the v0.1.0 image has been made public:

@@ -29,11 +29,25 @@ const { hasSidebar } = Astro.locals.starlightRoute;
       </nav>
     )
   }
-  <div class="main-frame"><slot /></div>
+  <div class="main-frame">
+    <aside class="renderer-experiment">Experimental renderer — purple preview</aside>
+    <slot />
+  </div>
   <SiteFooter />
 </div>
 
 <style>
+  :global(:root), :global(:root[data-theme="light"]) {
+    --sl-color-accent: #7c3aed;
+    --sl-color-bg-nav: #4c1d95;
+  }
+  .renderer-experiment {
+    background: #6d28d9;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    font-weight: 700;
+  }
   @layer starlight.core {
     .page {
       flex-direction: column;

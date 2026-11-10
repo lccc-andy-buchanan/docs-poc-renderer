@@ -72,16 +72,14 @@ const analyticsHead = gaEnabled
       ]
     : [];
 
-// The cookie consent banner/toast (rendered by src/components/CookieConsent.astro,
-// included via the Footer override) is driven by this external, same-origin
-// script - loaded unconditionally since the banner must appear regardless of
-// whether GA is enabled at all. Being an external file, it needs no CSP hash.
-const cookieConsentHead = [
+// Demo/preview builds have no analytics and omit consent UI and its script.
+// Keep this gate aligned with Footer.astro.
+const cookieConsentHead = gaEnabled ? [
     {
         tag: "script",
         attrs: { src: "/cookies.js", defer: true },
     },
-];
+] : [];
 
 // Preload the two Latin Atkinson weights used throughout the interface. The
 // files live in /public/fonts with versioned names so these URLs remain stable

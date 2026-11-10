@@ -12,6 +12,9 @@ import Pagination from "virtual:starlight/components/Pagination";
 import { Icon } from "@astrojs/starlight/components";
 import config from "virtual:starlight/user-config";
 import CookieConsent from "./CookieConsent.astro";
+// Match the existing analytics gate in astro.config.mjs.
+const consentEnabled = import.meta.env.PUBLIC_DEPLOYMENT_ENVIRONMENT === "production"
+  && Boolean(import.meta.env.PUBLIC_GA_MEASUREMENT_ID);
 ---
 
 <footer class="sl-flex">
@@ -30,7 +33,7 @@ import CookieConsent from "./CookieConsent.astro";
   }
 </footer>
 
-<CookieConsent />
+{consentEnabled && <CookieConsent />}
 
 <style>
   @layer starlight.core {

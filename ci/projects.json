@@ -1,0 +1,5 @@
+{
+  "projects": [
+    { "slug": "fixture", "path": "src/project-fixtures/fixture/docs" }
+  ]
+}

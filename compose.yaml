@@ -1,0 +1,12 @@
+services:
+  docs:
+    build:
+      context: .
+      target: development
+    ports:
+      - "4321:4321"
+    volumes:
+      - ./src/project-fixtures/fixture/docs:/workspace/docs:ro
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+      DOCS_RENDERER_PROJECT_SLUG: fixture

@@ -1,0 +1,44 @@
+name: Renderer
+on:
+  push:
+    branches: ['**']
+    tags: ['v*']
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - name: Test the portable renderer contract
+        run: |
+          docker run --rm -v "$PWD:/app" -w /app node:22-alpine sh -c 'apk add --no-cache git && sh scripts/test-renderer.sh'
+  container:
+    needs: validate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1 # v4
+      - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4
+      - name: Check both architectures without publishing
+        if: github.ref_type != 'tag'
+        run: sh scripts/build-image.sh check
+      - name: Publish a versioned release
+        if: github.event_name == 'push' && github.ref_type == 'tag'
+        env:
+          REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REGISTRY_USER: ${{ github.actor }}
+          IMAGE_REPOSITORY: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          printf '%s' "$REGISTRY_TOKEN" | docker login ghcr.io -u "$REGISTRY_USER" --password-stdin
+          image=$(printf 'ghcr.io/%s' "$IMAGE_REPOSITORY" | tr '[:upper:]' '[:lower:]')
+          sh scripts/build-image.sh publish "$image" "$RELEASE_TAG"

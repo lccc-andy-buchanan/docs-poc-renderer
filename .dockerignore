@@ -1,0 +1,9 @@
+node_modules
+dist
+.git
+**/.git
+.astro
+.renderer
+src/content/docs/projects
+src/project-sources
+.DS_Store

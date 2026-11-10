@@ -1,0 +1,22 @@
+{
+  "projects": [
+    {
+      "slug": "atlas",
+      "repository": "https://github.com/lccc-andy-buchanan/docs-poc-atlas.git",
+      "ref": "main",
+      "docs_path": "docs"
+    },
+    {
+      "slug": "beacon",
+      "repository": "https://github.com/lccc-andy-buchanan/docs-poc-beacon.git",
+      "ref": "main",
+      "docs_path": "docs"
+    },
+    {
+      "slug": "compass",
+      "repository": "https://github.com/lccc-andy-buchanan/docs-poc-compass.git",
+      "ref": "main",
+      "docs_path": "docs"
+    }
+  ]
+}
